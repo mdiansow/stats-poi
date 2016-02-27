@@ -35,3 +35,55 @@ java.lang.ArithmeticException: / by zero
 java.lang.ArithmeticException: / by zero
 	at stats.MainClass.main(MainClass.java:59)
 2016-02-26 20:21:26,996 INFO  MainClass.java:63 - End extract....
+2016-02-26 20:29:16,696 INFO  MainClass.java:45 - Start extract...
+2016-02-26 20:29:16,909 FATAL DBUtils.java:60 - FATAL: authentification par mot de passe ?chou?e pour l'utilisateur  ? dvdrental ?
+org.postgresql.util.PSQLException: FATAL: authentification par mot de passe ?chou?e pour l'utilisateur  ? dvdrental ?
+	at org.postgresql.core.v3.ConnectionFactoryImpl.doAuthentication(ConnectionFactoryImpl.java:420)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:195)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:66)
+	at org.postgresql.jdbc2.AbstractJdbc2Connection.<init>(AbstractJdbc2Connection.java:127)
+	at org.postgresql.jdbc3.AbstractJdbc3Connection.<init>(AbstractJdbc3Connection.java:29)
+	at org.postgresql.jdbc3g.AbstractJdbc3gConnection.<init>(AbstractJdbc3gConnection.java:21)
+	at org.postgresql.jdbc4.AbstractJdbc4Connection.<init>(AbstractJdbc4Connection.java:41)
+	at org.postgresql.jdbc4.Jdbc4Connection.<init>(Jdbc4Connection.java:24)
+	at org.postgresql.Driver.makeConnection(Driver.java:414)
+	at org.postgresql.Driver.connect(Driver.java:282)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at utils.DBUtils.getConnection(DBUtils.java:51)
+	at stats.MainClass.main(MainClass.java:48)
+2016-02-26 20:30:03,226 INFO  MainClass.java:45 - Start extract...
+2016-02-26 20:30:03,515 INFO  DBUtils.java:52 - Connexion réussi...
+2016-02-26 20:30:03,515 ERROR MainClass.java:61 - Impossible:  / by zero
+java.lang.ArithmeticException: / by zero
+	at stats.MainClass.main(MainClass.java:59)
+2016-02-26 20:30:03,515 INFO  MainClass.java:63 - End extract....
+2016-02-26 20:36:35,290 INFO  MainClass.java:45 - Start extract...
+2016-02-26 20:36:35,415 INFO  DBUtils.java:52 - Connexion à la base de données postgres
+2016-02-26 20:36:35,493 INFO  DBUtils.java:54 - Connexion réussi...
+2016-02-26 20:36:35,493 ERROR MainClass.java:61 - Impossible:  / by zero
+java.lang.ArithmeticException: / by zero
+	at stats.MainClass.main(MainClass.java:59)
+2016-02-26 20:36:35,493 INFO  MainClass.java:63 - End extract....
+2016-02-26 20:38:27,312 INFO  MainClass.java:45 - Start extract...
+2016-02-26 20:38:27,427 INFO  DBUtils.java:54 - Connexion à la base de données postgres
+2016-02-26 20:38:27,427 FATAL DBUtils.java:65 - No suitable driver found for jdbc:postgresql://localhost:5432dvdrental
+java.sql.SQLException: No suitable driver found for jdbc:postgresql://localhost:5432dvdrental
+	at java.sql.DriverManager.getConnection(DriverManager.java:689)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at utils.DBUtils.getConnection(DBUtils.java:55)
+	at stats.MainClass.main(MainClass.java:48)
+2016-02-26 20:39:16,677 INFO  MainClass.java:45 - Start extract...
+2016-02-26 20:39:16,774 INFO  DBUtils.java:54 - Connexion à la base de données postgres
+2016-02-26 20:39:16,867 INFO  DBUtils.java:57 - Connexion réussi...
+2016-02-26 20:39:16,867 ERROR MainClass.java:61 - Impossible:  / by zero
+java.lang.ArithmeticException: / by zero
+	at stats.MainClass.main(MainClass.java:59)
+2016-02-26 20:39:16,867 INFO  MainClass.java:63 - End extract....
+2016-02-26 20:40:37,170 INFO  MainClass.java:45 - Start extract...
+2016-02-26 20:40:37,295 INFO  DBUtils.java:54 - Connexion à la base de données POSTGRES
+2016-02-26 20:40:37,383 INFO  DBUtils.java:58 - Connexion réussi...
+2016-02-26 20:40:37,384 ERROR MainClass.java:61 - Impossible:  / by zero
+java.lang.ArithmeticException: / by zero
+	at stats.MainClass.main(MainClass.java:59)
+2016-02-26 20:40:37,385 INFO  MainClass.java:63 - End extract....
