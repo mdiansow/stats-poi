@@ -19,7 +19,7 @@ import utils.DBUtils;
  *
  */
 public class MainClass {
-	
+
 	public static Connection dbConnexion = null;
 
 	private static final Logger mainLogger = org.apache.log4j.Logger
@@ -43,7 +43,12 @@ public class MainClass {
 			e.printStackTrace();
 		}
 		mainLogger.info("Start extract...");
+
+		// DBUtils.readAllParam("");
 		
+		//DB properties
+		DBUtils.loadDBProperties("");
+
 		try {
 			dbConnexion = DBUtils.getConnection(mainLogger);
 		} catch (SQLException e1) {
