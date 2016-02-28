@@ -1,0 +1,1 @@
+C3=SELECT count(*) nb, sum(amount) as somme FROM public.payment;

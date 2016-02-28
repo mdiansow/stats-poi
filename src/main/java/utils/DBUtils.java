@@ -56,64 +56,35 @@ public class DBUtils {
 					"[main] Erreur lors de l'ouverture du fichier de log", e);
 			e.printStackTrace();
 		}
+		properties = Utils.loadProperties("\\conf/main.properties");
 
-		// Get DB properties
-		String dbName = properties.getProperty("DB_NAME");
-		String dbUser = properties.getProperty("DB_USER");
-		String dbUrl = properties.getProperty("DB_URL");
-		String dbPassword = properties.getProperty("DB_PASSWORD");
-		// enregistrer le pilote
-		try {
-			Class.forName(DB_DRIVER);
-			// String url = DB_URL;
-			dbUtilsLOGGER.info("Connexion à la base de données "
-					+ DB_USER.toUpperCase());
-			conn = DriverManager.getConnection(dbUrl + dbName, dbUser,
-					dbPassword);
-			dbUtilsLOGGER.info("Connexion réussi...");
+		if (properties != null) {
+			// Get DB properties
+			String dbName = properties.getProperty("DB_NAME");
+			String dbUser = properties.getProperty("DB_USER");
+			String dbUrl = properties.getProperty("DB_URL");
+			String dbPassword = properties.getProperty("DB_PASSWORD");
+			// enregistrer le pilote
+			try {
+				Class.forName(DB_DRIVER);
+				// String url = DB_URL;
+				dbUtilsLOGGER.info("Connexion à la base de données "
+						+ DB_USER.toUpperCase());
+				conn = DriverManager.getConnection(dbUrl + dbName, dbUser,
+						dbPassword);
+				dbUtilsLOGGER.info("Connexion réussi...");
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			dbUtilsLOGGER.fatal(e.getMessage(), e);
-			System.exit(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			dbUtilsLOGGER.fatal(e.getMessage(), e);
-			System.exit(2);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				dbUtilsLOGGER.fatal(e.getMessage(), e);
+				System.exit(1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				dbUtilsLOGGER.fatal(e.getMessage(), e);
+				System.exit(2);
+			}
 		}
 		return conn;
-	}
-
-	public static void loadDBProperties(String path) {
-		try {
-			path = new File(".").getCanonicalPath();
-
-			String dir = new File(path).getParent();
-
-			String prop = dir + "\\conf/main.properties";
-
-			FileInputStream file = new FileInputStream(prop);
-
-			// to load application's properties,
-			properties = new Properties();
-
-			// load all the properties from this file
-			properties.load(file);
-
-			Set set = properties.keySet();
-
-			Iterator<Set> it = set.iterator();
-			while (it.hasNext()) {
-				String key = "" + it.next();
-				System.out.println(key + " " + properties.getProperty(key));
-			}
-
-			// close the file
-			file.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public static void readAllParam(String paths) {
