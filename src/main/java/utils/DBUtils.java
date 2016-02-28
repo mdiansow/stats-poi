@@ -11,14 +11,14 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.Properties;
-import java.util.Set;
 
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+
+import stats.MainClass;
 
 /**
  * @author mamsow
@@ -26,8 +26,7 @@ import org.apache.log4j.PatternLayout;
  */
 public class DBUtils {
 
-	private static final Logger dbUtilsLOGGER = org.apache.log4j.Logger
-			.getLogger(DBUtils.class);
+	private static final Logger dbUtilsLOGGER = MainClass.MAIN_LOGGER;
 
 	private final static String DB_URL = "jdbc:postgresql://localhost:5432/";
 
@@ -43,19 +42,8 @@ public class DBUtils {
 
 	private static Properties properties = null;
 
-	public static Connection getConnection(Logger logger) throws SQLException {
+	public static Connection getConnection() throws SQLException {
 
-		dbUtilsLOGGER.setLevel(Level.INFO);
-		PatternLayout layout = new PatternLayout("%d %-5p %F:%L - %m%n");
-
-		try {
-			dbUtilsLOGGER.addAppender(new FileAppender(layout,
-					"stats_logger.log"));
-		} catch (IOException e) {
-			dbUtilsLOGGER.error(
-					"[main] Erreur lors de l'ouverture du fichier de log", e);
-			e.printStackTrace();
-		}
 		properties = Utils.loadProperties("\\conf/main.properties");
 
 		if (properties != null) {
@@ -123,13 +111,6 @@ public class DBUtils {
 			e.printStackTrace();
 		}
 	}
-
-	/*
-	 * public void listFilesForFolder(final File folder) { for (final File
-	 * fileEntry : folder.listFiles()) { if (fileEntry.isDirectory()) {
-	 * listFilesForFolder(fileEntry); } else {
-	 * System.out.println(fileEntry.getName()); } } }
-	 */
 
 	public static void closeConnection(Logger logger) throws SQLException {
 		try {
