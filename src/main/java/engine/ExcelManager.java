@@ -3,10 +3,14 @@
  */
 package engine;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -29,6 +33,7 @@ import utils.Utils;
 public class ExcelManager {
 
 	private static Logger logger = MainClass.MAIN_LOGGER;
+	private Workbook workbook;
 
 	/**
 	 * Read Excel file.
@@ -36,21 +41,38 @@ public class ExcelManager {
 	 * @param path
 	 *            Excel file path name
 	 */
-	public void readExcelFile(String path) {
+	public void processExcelFile(String path) {
 		try {
 			FileInputStream xlsFile = Utils.readFile(path);
 
-			final Workbook workbook = WorkbookFactory.create(xlsFile);
+			workbook = WorkbookFactory.create(xlsFile);
 
-			Sheet sheet = workbook.getSheet("ARCCPT");
-			logger.info("Sheet name:  " + sheet.getSheetName() + "  Physical row number  "+sheet.getPhysicalNumberOfRows());
+			int nbOfSheet = workbook.getNumberOfSheets();
 
-			
-			Row row = sheet.getRow(0);
-			final Cell cell = row.createCell(3);
-			cell.setCellValue("Coucou");
+			Path parent = Paths.get(System.getProperty("user.dir")).getParent();
+
+			File file = new File(parent + "/conf");
+			List<String> propertiesFiles = Utils.listFilesForFolder(file);
+			int index = -1;
+			while (++index < propertiesFiles.size()) {
+				String propertiesFileName = propertiesFiles.get(index);
+				String[] splitResult = propertiesFileName.split("\\.");
+				if (splitResult.length > 0) {
+					String sheetName = splitResult[0];
+					System.err.println("Sheet name\t" + sheetName);
+
+					Sheet sheet = workbook.getSheet(sheetName);
+					if (sheet != null) {
+						logger.info("Sheet name:  " + sheet.getSheetName()
+								+ "  Physical row number  "
+								+ sheet.getPhysicalNumberOfRows());
+						this.processShett(sheet, null);
+					}
+				}
+			}
+
 			try (FileOutputStream outputStream = new FileOutputStream(
-					"JavaBooks.xlsx")) {
+					"JavaBooks.xls")) {
 				workbook.write(outputStream);
 			}
 
@@ -69,17 +91,24 @@ public class ExcelManager {
 		}
 	}
 
+	public void processShett(Sheet sheetName, Properties properties) {
+		writeCell(sheetName, 2, "Hello world");
+	}
+
 	/**
 	 * 
 	 * @param ligne
 	 * @param request
 	 */
 	public void writeCell(Sheet sheet, int ligne, String request) {
-		Properties properties = Utils.loadProperties("");
-		logger.info("Properties \t" + properties.size());
+		// Properties properties = Utils.loadProperties("");
+		// logger.info("Properties \t" + properties.size());
 		String col = "B";
 		logger.info("Start write request result to cell " + col + ligne);
 		Row row = sheet.getRow(ligne);
+		if (row == null) {
+			row = sheet.createRow(ligne);
+		}
 		final Cell cell = row.createCell(3);
 		cell.setCellValue(request);
 	}

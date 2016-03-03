@@ -3,8 +3,10 @@
  */
 package stats;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,9 +17,9 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
-import engine.ExcelManager;
 import utils.DBUtils;
 import utils.Utils;
+import engine.ExcelManager;
 
 /**
  * @author mamsow
@@ -45,50 +47,33 @@ public class MainClass {
 		// DB properties
 		// Utils.loadDBProperties("", null);
 
-		try {
-			dbConnexion = DBUtils.getConnection();
+		// try {
+		// dbConnexion = DBUtils.getConnection();
+		//
+		// // Test request
+		// String req = "select * from actor;";
+		// PreparedStatement ps = dbConnexion.prepareStatement(req);
+		//
+		// // Process the result
+		// try {
+		// ResultSet rs = ps.executeQuery();
+		// while (rs.next()) {
+		// System.out.println("First name: " + rs.getString(2));
+		// }
+		// } catch (SQLException e) {
+		// MAIN_LOGGER.error(e.getStackTrace());
+		// }
+		//
+		// } catch (SQLException e1) {
+		// // TODO Auto-generated catch block
+		// MAIN_LOGGER.fatal(e1.getMessage(), e1);
+		// e1.printStackTrace();
+		// }
 
-			// Test request
-			String req = "select * from actor;";
-			PreparedStatement ps = dbConnexion.prepareStatement(req);
-
-			// Process the result
-			try {
-				ResultSet rs = ps.executeQuery();
-				while (rs.next()) {
-					System.out.println("First name: " + rs.getString(2));
-				}
-			} catch (SQLException e) {
-				MAIN_LOGGER.error(e.getStackTrace());
-			}
-
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			MAIN_LOGGER.fatal(e1.getMessage(), e1);
-			e1.printStackTrace();
-		}
 
 		ExcelManager extractor = new ExcelManager();
-		extractor.readExcelFile("\\conf/Stats-2016.xlsx");
+		extractor.processExcelFile("\\conf/Stats-2016.xls");
 
-		try {
-			Utils.readFile("");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// int a = 25;
-		// int b = 0;
-		//
-		// try {
-		// mainLogger.info("Opération: " + a / b);
-		// } catch (Exception e) {
-		// mainLogger.error("Impossible:  " + e.getMessage(), e);
-		// }
 		MAIN_LOGGER.info("End extract....");
 	}
 

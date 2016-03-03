@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -74,13 +76,18 @@ public class Utils {
 		return file;
 	}
 
-	public static void listFilesForFolder(final File folder) {
+	public static List<String> listFilesForFolder(final File folder) {
+		List<String> listOfFiles = new ArrayList<String>();
 		for (final File fileEntry : folder.listFiles()) {
 			if (fileEntry.isDirectory()) {
 				listFilesForFolder(fileEntry);
 			} else {
-				uLogger.info("File:\t" + fileEntry.getName());
+				String fileName = fileEntry.getName();
+				listOfFiles.add(fileName);
+				uLogger.info("File Entry:\t" + fileName);
+				System.err.println("File\t" + fileEntry.getName());
 			}
 		}
+		return listOfFiles;
 	}
 }
