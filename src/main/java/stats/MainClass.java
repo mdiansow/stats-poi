@@ -3,23 +3,16 @@
  */
 package stats;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
-import utils.DBUtils;
-import utils.Utils;
-import engine.ExcelManager;
+import engineImpl.ExcelManager;
+import engineImpl.IExcelManager;
 
 /**
  * @author mamsow
@@ -32,7 +25,7 @@ public class MainClass {
 	public static final Logger MAIN_LOGGER = org.apache.log4j.Logger
 			.getLogger(MainClass.class);
 
-	private static String excelFilePath = "\\conf/Stats-2016.xlsx";
+	// private static String excelFilePath = "\\conf/Stats-2016.xlsx";
 
 	/**
 	 * @param args
@@ -70,8 +63,7 @@ public class MainClass {
 		// e1.printStackTrace();
 		// }
 
-
-		ExcelManager extractor = new ExcelManager();
+		IExcelManager extractor = new ExcelManager();
 		extractor.processExcelFile("\\conf/Stats-2016.xls");
 
 		MAIN_LOGGER.info("End extract....");

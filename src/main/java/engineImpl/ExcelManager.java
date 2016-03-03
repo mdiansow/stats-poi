@@ -1,7 +1,7 @@
 /**
  * 
  */
-package engine;
+package engineImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,24 +30,22 @@ import utils.Utils;
  * @author mamsow
  *
  */
-public class ExcelManager {
+public class ExcelManager implements IExcelManager {
 
 	private static Logger logger = MainClass.MAIN_LOGGER;
 	private Workbook workbook;
 
-	/**
-	 * Read Excel file.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param path
-	 *            Excel file path name
+	 * @see engineImpl.IExcelManager#processExcelFile(java.lang.String)
 	 */
+	@Override
 	public void processExcelFile(String path) {
 		try {
 			FileInputStream xlsFile = Utils.readFile(path);
 
 			workbook = WorkbookFactory.create(xlsFile);
-
-			int nbOfSheet = workbook.getNumberOfSheets();
 
 			Path parent = Paths.get(System.getProperty("user.dir")).getParent();
 
@@ -66,7 +64,7 @@ public class ExcelManager {
 						logger.info("Sheet name:  " + sheet.getSheetName()
 								+ "  Physical row number  "
 								+ sheet.getPhysicalNumberOfRows());
-						this.processShett(sheet, null);
+						this.processSheet(sheet, null);
 					}
 				}
 			}
@@ -91,15 +89,26 @@ public class ExcelManager {
 		}
 	}
 
-	public void processShett(Sheet sheetName, Properties properties) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * engineImpl.IExcelManager#processShett(org.apache.poi.ss.usermodel.Sheet,
+	 * java.util.Properties)
+	 */
+	@Override
+	public void processSheet(Sheet sheetName, Properties properties) {
 		writeCell(sheetName, 2, "Hello world");
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param ligne
-	 * @param request
+	 * @see
+	 * engineImpl.IExcelManager#writeCell(org.apache.poi.ss.usermodel.Sheet,
+	 * int, java.lang.String)
 	 */
+	@Override
 	public void writeCell(Sheet sheet, int ligne, String request) {
 		// Properties properties = Utils.loadProperties("");
 		// logger.info("Properties \t" + properties.size());

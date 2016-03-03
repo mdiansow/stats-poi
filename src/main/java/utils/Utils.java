@@ -37,7 +37,7 @@ public class Utils {
 
 			Set set = properties.keySet();
 
-			Iterator<Set> it = set.iterator();
+			Iterator<String> it = set.iterator();
 			while (it.hasNext()) {
 				String key = "" + it.next();
 				System.out.println(key + " " + properties.getProperty(key));
