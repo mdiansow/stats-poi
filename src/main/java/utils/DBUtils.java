@@ -6,6 +6,7 @@ package utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -17,6 +18,7 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import org.apache.poi.util.StringUtil;
 
 import stats.MainClass;
 
@@ -44,7 +46,7 @@ public class DBUtils {
 
 	public static Connection getConnection() throws SQLException {
 
-		properties = Utils.loadProperties("\\conf/main.properties");
+		properties = Utils.loadProperties("\\ARCCPT.properties");
 
 		if (properties != null) {
 			// Get DB properties
@@ -75,17 +77,17 @@ public class DBUtils {
 		return conn;
 	}
 
-	public static void readAllParam(String paths) {
+	public static void readAllParam(String propertiesFile) {
 		try {
-			String path = new File(".").getCanonicalPath();
-			String dir = new File(path).getParent();
+			// String path = new File(".").getCanonicalPath();
+			// String dir = new File(path).getParent();
+			//
+			// String prop = dir + "\\conf/main.properties";
 
-			String prop = dir + "\\conf/main.properties";
-
-			FileInputStream file = new FileInputStream(prop);
+			FileInputStream file = new FileInputStream(propertiesFile);
 
 			// to load application's properties,
-			Properties properties = new Properties();
+			properties = new Properties();
 
 			// load all the properties from this file
 			properties.load(file);
@@ -93,23 +95,23 @@ public class DBUtils {
 			// close the file
 			file.close();
 
-			System.err.println("Properties "
-					+ properties.getProperty("app.version"));
-			System.out.println();
+			System.err.println("Properties size\t" + properties.size());
 
-			System.out.println("Directory  " + dir);
-			dbUtilsLOGGER.info("DIR path " + path);
-			Files.walk(Paths.get("/e/capgemini/conf").getParent()).forEach(
-					filePath -> {
-						if (Files.isRegularFile(filePath)) {
-							System.out.println(filePath);
-						}
-					});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			dbUtilsLOGGER.fatal(e.getStackTrace(), e);
 			e.printStackTrace();
 		}
+	}
+
+	public static int nbArgs(String request) {
+		int counter = 0;
+		for (int i = 0; i < request.length(); i++) {
+			if (request.charAt(i) == '?') {
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 	public static void closeConnection(Logger logger) throws SQLException {

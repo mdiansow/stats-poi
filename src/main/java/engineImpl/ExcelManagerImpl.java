@@ -22,6 +22,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import engine.IExcelManager;
 import stats.MainClass;
 import utils.Utils;
 
@@ -30,7 +31,7 @@ import utils.Utils;
  * @author mamsow
  *
  */
-public class ExcelManager implements IExcelManager {
+public class ExcelManagerImpl implements IExcelManager {
 
 	private static Logger logger = MainClass.MAIN_LOGGER;
 	private Workbook workbook;

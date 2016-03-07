@@ -7,16 +7,11 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.chainsaw.Main;
 
 import stats.MainClass;
 
@@ -27,7 +22,12 @@ public class Utils {
 
 	public static Properties loadProperties(String path) {
 		try {
-			FileInputStream file = readFile(path);
+			// String path = new File(".").getCanonicalPath();
+			// String dir = new File(path).getParent();
+			//
+			// String prop = dir + "\\conf/main.properties";
+
+			FileInputStream file = new FileInputStream(path);
 
 			// to load application's properties,
 			properties = new Properties();
@@ -35,22 +35,35 @@ public class Utils {
 			// load all the properties from this file
 			properties.load(file);
 
-			Set set = properties.keySet();
-
-			Iterator<String> it = set.iterator();
-			while (it.hasNext()) {
-				String key = "" + it.next();
-				System.out.println(key + " " + properties.getProperty(key));
-			}
-
 			// close the file
 			file.close();
 
+			System.err.println("Properties size\t" + properties.size());
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			uLogger.fatal(e.getStackTrace(), e);
 			e.printStackTrace();
 		}
 		return properties;
+	}
+
+	public static List<String> sqlRequestsKeys(Properties props) {
+		ArrayList<String> sqlRequestKeys = new ArrayList<String>();
+		int propsSize = props.size();
+
+		if (propsSize > 0) {
+			Enumeration<?> names = props.propertyNames();
+			while (names.hasMoreElements()) {
+				Object object = (Object) names.nextElement();
+				System.err.println("Key  " + object);
+				if (object.toString().contains(Constant.SQL_REQUEST_KEY)) {
+					sqlRequestKeys.add(object.toString());
+				}
+			}
+		}
+
+		return sqlRequestKeys;
 	}
 
 	/**
@@ -89,5 +102,19 @@ public class Utils {
 			}
 		}
 		return listOfFiles;
+	}
+
+	public void listf(String directoryName, List<File> files) {
+		File directory = new File(directoryName);
+
+		// get all the files from a directory
+		File[] fList = directory.listFiles();
+		for (File file : fList) {
+			if (file.isFile()) {
+				files.add(file);
+			} else if (file.isDirectory()) {
+				listf(file.getAbsolutePath(), files);
+			}
+		}
 	}
 }
