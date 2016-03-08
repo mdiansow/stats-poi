@@ -5,19 +5,11 @@ package stats;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
@@ -26,10 +18,7 @@ import org.apache.log4j.PatternLayout;
 
 import sqlrequestImpl.SQLQueryManagerImpl;
 import utils.Constant;
-import utils.DBUtils;
 import utils.Utils;
-import engine.IExcelManager;
-import engineImpl.ExcelManagerImpl;
 
 /**
  * @author mamsow
@@ -59,9 +48,9 @@ public class MainClass {
 		Map<String, Object> queryResult = new HashMap<String, Object>();
 
 		new SQLQueryManagerImpl().processAllQuery("/ARCCPT.properties",
-				dateArgs, queryResult);
+				dateArgs, queryResult, null);
 		new SQLQueryManagerImpl().processAllQuery("/ARCCSI.properties",
-				dateArgs, queryResult);
+				dateArgs, queryResult, null);
 
 		System.err.println("nb of result " + queryResult.size());
 
@@ -86,12 +75,12 @@ public class MainClass {
 		// DB properties
 		// Utils.loadDBProperties("", null);
 
-		// List<File> files = new ArrayList<File>();
-		// new Utils().listf("/resources", files);
-		//
-		// for (File f : files) {
-		// System.err.println("File main\t" + f.getName());
-		// }
+		List<File> files = new ArrayList<File>();
+		new Utils().listf("", files);
+
+		for (File f : files) {
+			System.err.println("File main\t" + f.getName());
+		}
 		// String[] rArgs = { "01/04/2007", "01/05/2007" };
 
 		// try {

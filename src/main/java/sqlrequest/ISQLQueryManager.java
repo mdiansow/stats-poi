@@ -3,6 +3,8 @@ package sqlrequest;
 import java.sql.Connection;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Sheet;
+
 /**
  * 
  * @author MDian
@@ -17,9 +19,10 @@ public interface ISQLQueryManager {
 	 * @param args
 	 *            TODO
 	 * @param queryResult TODO
+	 * @param sheetName TODO
 	 * @return
 	 */
-	Map<String, Object> processAllQuery(String propsFileName, Map<String, String> args, Map<String, Object> queryResult);
+	Map<String, Object> processAllQuery(String propsFileName, Map<String, String> args, Map<String, Object> queryResult, Sheet sheetName);
 
 	/**
 	 * Exécute une requête avec des arguments

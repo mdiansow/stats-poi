@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.poi.ss.usermodel.Sheet;
+
 import sqlrequest.ISQLQueryManager;
 import stats.MainClass;
 import utils.Constant;
@@ -33,9 +35,9 @@ public class SQLQueryManagerImpl implements ISQLQueryManager {
 	 */
 	@Override
 	public Map<String, Object> processAllQuery(String propsFileName,
-			Map<String, String> args, Map<String, Object> queryResult) {
+			Map<String, String> args, Map<String, Object> queryResult, Sheet sheetName) {
 		// TODO Auto-generated method stub
-		URL propertiesFile = MainClass.class.getResource(propsFileName);
+		URL propertiesFile = SQLQueryManagerImpl.class.getResource(propsFileName);
 
 		Properties props = Utils.loadProperties(propertiesFile.getPath());
 		System.err.println("Process " + propsFileName);
