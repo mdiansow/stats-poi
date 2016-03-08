@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -44,19 +45,20 @@ public class DBUtils {
 
 	private static Properties properties = null;
 
-	public static Connection getConnection() throws SQLException {
+	public static Connection getConnection(Properties props)
+			throws SQLException {
 
-		properties = Utils.loadProperties("\\ARCCPT.properties");
-
+		properties = props;// Utils.loadProperties(propertiesFile.getPath());
 		if (properties != null) {
 			// Get DB properties
 			String dbName = properties.getProperty("DB_NAME");
 			String dbUser = properties.getProperty("DB_USER");
 			String dbUrl = properties.getProperty("DB_URL");
 			String dbPassword = properties.getProperty("DB_PASSWORD");
+			String db_driver = properties.getProperty("DB_DRIVER");
 			// enregistrer le pilote
 			try {
-				Class.forName(DB_DRIVER);
+				Class.forName(db_driver);
 				// String url = DB_URL;
 				dbUtilsLOGGER.info("Connexion à la base de données "
 						+ DB_USER.toUpperCase());
@@ -104,6 +106,11 @@ public class DBUtils {
 		}
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
 	public static int nbArgs(String request) {
 		int counter = 0;
 		for (int i = 0; i < request.length(); i++) {

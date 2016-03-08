@@ -11,8 +11,12 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.FileAppender;
@@ -21,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
 import sqlrequestImpl.SQLQueryManagerImpl;
+import utils.Constant;
 import utils.DBUtils;
 import utils.Utils;
 import engine.IExcelManager;
@@ -47,17 +52,37 @@ public class MainClass {
 		initLogger();
 		MAIN_LOGGER.info("Start extract...");
 
-		URL propertiesFile = MainClass.class.getResource("/ARCCPT.properties");
-		System.err.println("Path\t" + propertiesFile.getFile());
+		Map<String, String> dateArgs = new HashMap<String, String>();
+		dateArgs.put(Constant.END_DATE_NAME, "01/04/2007");
+		dateArgs.put(Constant.START_DATE_NAME, "25/02/2007");
 
-		Properties props = Utils.loadProperties(propertiesFile.getPath());
+		Map<String, Object> queryResult = new HashMap<String, Object>();
 
-		List<String> sqlProps = Utils.sqlRequestsKeys(props);
-		System.out.println("SQL request key:  " + sqlProps.size());
-		for (int i = 0; i < sqlProps.size(); i++) {
-			System.err.println("Request (" + i + "), nb args: "
-					+ DBUtils.nbArgs(props.getProperty(sqlProps.get(i))));
-		}
+		new SQLQueryManagerImpl().processAllQuery("/ARCCPT.properties",
+				dateArgs, queryResult);
+		new SQLQueryManagerImpl().processAllQuery("/ARCCSI.properties",
+				dateArgs, queryResult);
+
+		System.err.println("nb of result " + queryResult.size());
+
+		// Calendar cal = Calendar.getInstance();
+		// System.out.println(new SimpleDateFormat("MM/YYYY").format(cal
+		// .getTime()));
+		//
+		//
+		//
+		// URL propertiesFile =
+		// MainClass.class.getResource("/ARCCPT.properties");
+		// System.err.println("Path\t" + propertiesFile.getFile());
+		//
+		// Properties props = Utils.loadProperties(propertiesFile.getPath());
+		//
+		// List<String> sqlProps = Utils.sqlRequestsKeys(props);
+		// System.out.println("SQL request key:  " + sqlProps.size());
+		// for (int i = 0; i < sqlProps.size(); i++) {
+		// System.err.println("Request (" + i + "), nb args: "
+		// + DBUtils.nbArgs(props.getProperty(sqlProps.get(i))));
+		// }
 		// DB properties
 		// Utils.loadDBProperties("", null);
 
