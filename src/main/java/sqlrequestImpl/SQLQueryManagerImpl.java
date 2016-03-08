@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -16,7 +15,6 @@ import java.util.Properties;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import sqlrequest.ISQLQueryManager;
-import stats.MainClass;
 import utils.Constant;
 import utils.DBUtils;
 import utils.Utils;

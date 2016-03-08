@@ -48,6 +48,11 @@ public class Utils {
 		return properties;
 	}
 
+	/**
+	 * 
+	 * @param props
+	 * @return
+	 */
 	public static List<String> sqlRequestsKeys(Properties props) {
 		ArrayList<String> sqlRequestKeys = new ArrayList<String>();
 		int propsSize = props.size();
@@ -105,7 +110,7 @@ public class Utils {
 	}
 
 	public void listf(String directoryName, List<File> files) {
-		
+
 		File directory = new File(directoryName);
 
 		// get all the files from a directory
